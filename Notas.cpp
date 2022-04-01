@@ -64,22 +64,48 @@ class Docente : public Persona{
     private:
         string especialidad;
         float sueldo;
+        Estudiante* listaEstudiantes[30];
+        int nEstudiantes;
     public:
         Docente(string,string,string,float);
         void mostrarDocente();
+        void asignarEstudiante(Estudiante*);
 };
 
 Docente :: Docente(string d, string n, string e, float s)
     : Persona(d,n){
         especialidad = e;
         sueldo = s;
+        nEstudiantes = 0;
 }
 
 void Docente :: mostrarDocente(){
     mostrarDatos();
     cout<<", es un docente con especialidad de ";
-    cout<<especialidad<< " y tiene un salario de S/";
+    cout<<especialidad<< ", tiene un salario de S/";
     cout<<sueldo;
+    if(nEstudiantes == 0){
+        cout<<" y no tiene estudiantes asignados.";
+        cout<<endl;
+    }
+    else{
+        cout<<" y tiene "<<nEstudiantes<<" estudiantes: ";
+        cout<<endl;
+        for(int i=0; i<nEstudiantes; i++){
+            cout<<i+1<<"-> ";
+            listaEstudiantes[i]->mostrarEstudiante();
+        }
+    }
+}
+
+void Docente :: asignarEstudiante(Estudiante *pE){
+    if(nEstudiantes <= 30){
+        listaEstudiantes[nEstudiantes] = pE;
+        nEstudiantes++;
+    }
+    else
+        cout<<"No se puedo agregar al estudiante"<<endl;
+    
 }
 
 int main(){
@@ -95,6 +121,11 @@ int main(){
     est1.mostrarEstudiante();
     cout<<"-------------------"<<endl;
     Docente doc("00102030","Pablo Mamani","Ing. Quimico",5000.00);
+    doc.mostrarDocente();
+    Estudiante est2("10203041","Andrez Gomez","2021-123457");
+    doc.asignarEstudiante(&est1);
+    doc.asignarEstudiante(&est2);
+    cout<<"-------------------"<<endl;
     doc.mostrarDocente();
     return 0;
 }
