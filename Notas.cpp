@@ -19,15 +19,19 @@ void Persona :: mostrarDatos(){
     cout<<nombres<<" tiene el DNI #"<<DNI;
 }
 
+class Docente;
+
 class Estudiante : public Persona{
     private:
         string codigo;
         int notas[10];
         int nNotas;
+        Docente *docente;
     public:
         Estudiante(string,string,string);
         void ingresarNota(int);
         void mostrarEstudiante();
+        void asignarDocente(Docente *);
 }; 
 
 Estudiante :: Estudiante(string n, string d, string c)
@@ -58,6 +62,10 @@ void Estudiante :: mostrarEstudiante(){
         }
         cout<<"Promedio: "<<S/nNotas<<endl;
     }
+}
+
+void Estudiante :: asignarDocente(Docente *pD){
+    docente = pD;
 }
 
 class Docente : public Persona{
@@ -101,11 +109,11 @@ void Docente :: mostrarDocente(){
 void Docente :: asignarEstudiante(Estudiante *pE){
     if(nEstudiantes <= 30){
         listaEstudiantes[nEstudiantes] = pE;
+        pE->asignarDocente(this);
         nEstudiantes++;
     }
     else
         cout<<"No se puedo agregar al estudiante"<<endl;
-    
 }
 
 int main(){
