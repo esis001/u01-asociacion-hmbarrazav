@@ -1,4 +1,5 @@
 #include<iostream>
+#include<iomanip> 
 using namespace std;
 
 class Persona{
@@ -104,7 +105,19 @@ class Docente : public Persona{
         void mostrarDocente();
         void asignarEstudiante(Estudiante*);
         void ingresarNotaEst(int, int);
+        void visualizarRegistro();
 };
+
+void Docente :: visualizarRegistro(){
+    for(int i=0; i<nEstudiantes;i++){
+        cout<<listaEstudiantes[i]->getCodigo();
+        cout<<"\t"<<listaEstudiantes[i]->getNombres();
+        int *ptr = listaEstudiantes[i]->getNotas();
+        for(int j=0; j<listaEstudiantes[i]->getNNotas();j++)
+            cout<<"\t"<<ptr[j];
+        cout<<endl;
+    }
+}
 
 void Docente :: ingresarNotaEst(int nota, int nE){
     listaEstudiantes[nE] -> ingresarNota(nota);
@@ -152,7 +165,7 @@ int main(){
     //Persona per1("12345678", "Fulatino de Tal");
     //per1.mostrarDatos();
     //cout<<endl;
-    Estudiante est1("10203040","Jorge Perez","2021-123456");
+    Estudiante est1("10203040","Jorge Perez Aro","2021-123456");
     est1.mostrarEstudiante();
     est1.ingresarNota(16);
     est1.ingresarNota(14);
@@ -160,20 +173,16 @@ int main(){
     cout<<"-------------------"<<endl;
     est1.mostrarEstudiante();
     cout<<"-------------------"<<endl;
-    /*Docente doc("00102030","Pablo Mamani","Ing. Quimico",5000.00);
+    Docente doc("00102030","Pablo Mamani","Ing. Quimico",5000.00);
     doc.mostrarDocente();
-    Estudiante est2("10203041","Andrez Gomez","2021-123457");
+    Estudiante est2("10203041","Andrez Gomez Quispe","2021-123457");
     doc.asignarEstudiante(&est1);
     doc.asignarEstudiante(&est2);
     cout<<"-------------------"<<endl;
-    doc.mostrarDocente();*/
-    cout<<"Codigo: "<<est1.getCodigo()<<endl;
-    cout<<"Nombres: "<<est1.getNombres()<<endl;
-    cout<<"Cantidad de notas: "<<est1.getNNotas()<<endl;
-    //cout<<"Notas: "<<*est1.getNotas()<<endl;
-    //cout<<"Notas: "<<*(est1.getNotas()+1)<<endl;
-    for(int i=0; i<est1.getNNotas();i++){
-        cout<<"Nota #"<<i+1<<": "<<*(est1.getNotas()+i)<<endl;
-    }
+    doc.mostrarDocente();
+    doc.ingresarNotaEst(20,1);
+    doc.ingresarNotaEst(02,1);
+    cout<<"-------------------"<<endl;
+    doc.visualizarRegistro();
     return 0;
 }
